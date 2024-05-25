@@ -7,7 +7,8 @@ sample_link = "https://www.youtube.com/watch?v=w330WRDgpKs"
 def is_valid_youtube_url(url: str) -> bool:
     standard_pattern = re.compile(r'^https?://(?:www\.)?youtube\.com/watch\?v=[\w-]+')
     mobile_pattern = re.compile(r'^https?://youtu\.be/[\w-]+')
-    return bool(standard_pattern.match(url) or mobile_pattern.match(url))
+    shorts_mobile_pattern = re.compile(r'^https?://(?:www\.)?youtube\.com/shorts/[\w-]+')
+    return bool(standard_pattern.match(url) or mobile_pattern.match(url) or shorts_mobile_pattern.match(url))
 
 def seconds_to_duration(seconds: int):
     hours, remainder = divmod(seconds, 3600)
@@ -22,5 +23,5 @@ def get_thumbnail_url(video_link: str):
     
 
 if __name__ == "__main__":
-    result = is_valid_youtube_url("https://www.youtube.com/watch?v=w8KfoK4oZ3o")
-    print(result)
+    v = YouTube(sample_link)
+    print(v.embed_url)

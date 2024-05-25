@@ -6,8 +6,12 @@
 
 {% block main %}
 <div id="mainContent" class="my-5">
-    <div class="thumbnailBox">
+    <div id="thumbnailBox">
+        {% if info.get("embed_url") %}
+        <iframe id="iframe" src="{{info.get('embed_url')}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        {% else %}
         <img src="{{imgSrc}}" alt="thumbnail image" id="thumbnail-main">
+        {% endif %}
     </div>
     <div class="detailsWrapper">
         <h1 class="title myText">{{ info.get("title") }}</h1>
