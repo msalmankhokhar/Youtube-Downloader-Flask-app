@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/index..css">
+{% endblock css %}
+
+{% block main %}
+<form id="searchBox" action="/video" method="get">
+    <input type="text" placeholder="Youtube video link" name="link" class="myInputField" id="linkInput" required {% if link %}value="{{link}}"{% endif %}>
+    <button type="submit" class="btn btn-success" id="submitBtn">
+        <i class="fa-solid fa-cloud-arrow-down"></i>
+        <span>Download</span>
+    </button>
+</form>
+{% endblock main %}

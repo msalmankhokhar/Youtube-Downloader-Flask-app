@@ -1,0 +1,6 @@
+#searchBox{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 3rem 0rem;
+}
