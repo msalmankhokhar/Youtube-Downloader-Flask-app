@@ -3,9 +3,8 @@ import requests
 from util import get_thumbnail_url, is_valid_youtube_url, seconds_to_duration
 from pytube import YouTube
 from pytube.exceptions import VideoUnavailable
-import cv2
 from waitress import serve
-import youtube_dl
+
 app = Flask(__name__)
 app.secret_key = "salmank138"
 
