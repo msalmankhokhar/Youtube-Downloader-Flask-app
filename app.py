@@ -44,7 +44,7 @@ def get_streams():
             streams = [ { "res" : stream.resolution, "dl_link" : stream.url, "filesize" : round(stream.filesize_mb), "includes_audio" : stream.includes_audio_track } for stream in streamQuery ]
             return { "list" : streams }
         except VideoUnavailable as e:
-            return { "error" : True , "msg" : e.error_string}
+            return { "error" : True , "msg" : "Sorry, this Video is unavailable"}
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
