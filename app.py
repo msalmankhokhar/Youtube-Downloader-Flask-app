@@ -40,7 +40,7 @@ def get_streams():
     if request.method == "GET":
         try:
             video = YouTube(link)
-            streamQuery = video.streams.filter(file_extension='mp4', only_audio=False, type="video", progressive=True)
+            streamQuery = video.streams.filter(file_extension='mp4', only_audio=False, type="video", progressive=False)
             streams = [ { "res" : stream.resolution, "dl_link" : stream.url, "filesize" : round(stream.filesize_mb), "includes_audio" : stream.includes_audio_track } for stream in streamQuery ]
             return { "list" : streams }
         except VideoUnavailable as e:
