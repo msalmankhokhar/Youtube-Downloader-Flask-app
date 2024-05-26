@@ -37,10 +37,10 @@ def video():
 @app.route('/streams', methods=["GET", "POST"])
 def get_streams():
     link = request.args.get("link")
-    video = YouTube(link)
-    streamQuery = video.streams.filter(file_extension='mp4', only_audio=False, type="video", progressive=True)
     if request.method == "GET":
         try:
+            video = YouTube(link)
+            streamQuery = video.streams.filter(file_extension='mp4', only_audio=False, type="video", progressive=True)
             streams = [ { "res" : stream.resolution, "dl_link" : stream.url, "filesize" : round(stream.filesize_mb), "includes_audio" : stream.includes_audio_track } for stream in streamQuery ]
             return { "list" : streams }
         except VideoUnavailable as e:
