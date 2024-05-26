@@ -23,8 +23,8 @@
             </a>
         </div>
         <div id="loaderBox">
-            <lottie-player src="https://lottie.host/357e594f-09d0-48cc-ae41-1c04b33a3b8e/CSB0vKrRqv.json" background="#00000000" speed="1" style="width: 100px;" loop autoplay direction="1" mode="normal"></lottie-player>
-            <p class="myText loadingMsg">Loading download options..</p>
+            <lottie-player id="loader" src="https://lottie.host/357e594f-09d0-48cc-ae41-1c04b33a3b8e/CSB0vKrRqv.json" background="#00000000" speed="1" style="width: 100px;" loop autoplay direction="1" mode="normal"></lottie-player>
+            <p class="myText" id="loadingStatus">Loading download options..</p>
         </div>
     </div>
 </div>
@@ -36,12 +36,13 @@
     let btnBox = document.querySelector("#mainContent .detailsWrapper .btnBox");
     let link = "{{link}}";
     let loaderBox = document.getElementById("loaderBox");
+    let loader = document.getElementById("loader");
+    let loadingStatus = document.getElementById("loadingStatus");
 
     function createButton(data){
         let button = document.createElement("a");
         button.setAttribute("class", "btn btn-success");
         button.setAttribute("target", "_blank");
-        // button.setAttribute("href", `/dl?link=${data["dl_link"]}&res=${data['res']}`);
         button.setAttribute("href", data["dl_link"]);
         button.innerHTML = `<i class="fa-solid fa-cloud-arrow-down"></i>
         <span>Download MP4 ${data['res']} ${data['filesize']} MB</span>`;
@@ -55,11 +56,17 @@
     }
     ).then((response)=>{ 
     return response.json().then((jsonResponse)=>{
-        loaderBox.style.display = "none";
-        let list = jsonResponse["list"]
-        list.forEach(item => {
-            createButton(item);
-        });
+        if (jsonResponse.error) {
+            loader.style.display = "none";
+            loadingStatus.innerText = jsonResponse.msg;
+            loadingStatus.style.color = "red";
+        } else {
+            loaderBox.style.display = "none";
+            let list = jsonResponse["list"]
+            list.forEach(item => {
+                createButton(item);
+            });
+        }
     })
 })
 </script>
