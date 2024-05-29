@@ -21,9 +21,9 @@ footer{
     <div class="bg-white p-8 shadow rounded-lg">
         <h2 class="text-2xl font-bold text-gray-800 mb-4">Download Videos Instantly</h2>
         <p class="text-gray-600 mb-8">Enter the URL of the YouTube video you want to download below.</p>
-        <form class="flex flex-col gap-4 flex-wrap" action="/video" method="get">
-            <input type="text" name="link" class="flex-1 p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-black" placeholder="Paste YouTube link here">
-            <button type="submit" class="bg-{{g.themecolor}}-500 hover:bg-{{g.themecolor}}-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+        <form id="form" class="flex flex-col gap-4 flex-wrap" action="/video" method="get">
+            <input required id="input" type="text" name="link" class="flex-1 p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-black" placeholder="Paste YouTube link here">
+            <button id="submitBtn" type="submit" class="bg-{{g.themecolor}}-500 hover:bg-{{g.themecolor}}-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
                 Download
             </button>
         </form>
@@ -32,4 +32,19 @@ footer{
 
 {% endblock main %}
 
-{% block js %}{% endblock js %}
+{% block js %}
+<script>
+    let input = document.getElementById("input");
+    let submitBtn = document.getElementById("submitBtn");
+    let form = document.getElementById("form");
+
+    submitBtn.addEventListener('click', (event)=>{
+        event.preventDefault();
+        if (! input.checkValidity()) {
+            input.reportValidity();
+        }else{
+            form.submit();
+        }
+    })
+</script>
+{% endblock js %}
