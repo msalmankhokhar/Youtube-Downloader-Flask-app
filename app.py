@@ -5,6 +5,7 @@ from pytube import YouTube, Stream
 from pytube.exceptions import VideoUnavailable, RegexMatchError
 from waitress import serve
 from urllib.parse import urljoin
+from svg import svg
 
 app = Flask(__name__)
 app.secret_key = "salmank138"
@@ -15,12 +16,13 @@ THEME_COLOR2 = "orange"
 def add_theme_color():
     g.themecolor = THEME_COLOR
     g.themecolor2 = THEME_COLOR2
+    g.svg = svg
 
 @app.route('/')
 def index():
     link = request.args.get("link")
     prevImg = urljoin(request.host_url, '/static/logos/apple-touch-icon.png')
-    print(prevImg)
+    # flash("I am salman", "warning")
     return render_template('index.html', link =  link, prevImg =  prevImg)
 
 @app.route('/video')
@@ -35,13 +37,13 @@ def video():
             info = { "title" : video.title, "duration" : seconds_to_duration(video.length), "thumbnailSrc": thumbNail_src, "embed_url": video.embed_url }
             return render_template('dl2.html', imgSrc = thumbNail_src, info = info, link = link)
         except VideoUnavailable as e:
-            flash(f"Sorry this video is unavailable<br>Error: {str(e)}", "error")
+            flash(f"Sorry this video is unavailable<br>Error: {str(e)}", "danger")
             return redirect("/")
         except RegexMatchError as e:
-            flash(f"Invalid URL! Please enter a valid youtube video URL<br>Error: {str(e)}", "error")
+            flash(f"Invalid URL! Please enter a valid youtube video URL<br>Error: {str(e)}", "warning")
             return redirect("/")
     else:
-        flash("Invalid URL! Please enter a valid youtube video URL", "error")
+        flash("Invalid URL! Please enter a valid youtube video URL", "warning")
         return redirect("/")
 
 @app.route('/streams', methods=["GET", "POST"])
