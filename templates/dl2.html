@@ -1,0 +1,126 @@
+{% extends "base2.html" %}
+
+{% block prevImg %}{{imgSrc}}{% endblock prevImg %}
+
+{% block title %}{{ info.get("title") }} | V Downloader{% endblock title %}
+
+{% block desc %}{% endblock desc %}
+
+{% block css %}
+<style>
+#loader{
+    max-width: 100px;
+}
+
+#loaderBox{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#thumbnailBox{
+    width: 287px;
+}
+
+#iframe{
+    width: 100%;
+    aspect-ratio: 16/9;
+}
+
+@media screen and (max-width: 589px) {
+    #thumbnail-main{
+        max-width: 100%;
+    }
+}
+</style>
+{% endblock css %}
+
+{% block main %}
+
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-white p-8 shadow rounded-lg">
+        <div class="flex items-center space-x-6 mb-4">
+            <div id="thumbnailBox">
+                <!-- Thumbnail Image or Iframe here-->
+                <!-- <img class="w-32 h-32 rounded" src="{{imgSrc}}" alt="Video thumbnail placeholder"> -->
+                <img src="{{imgSrc}}" alt="thumbnail image" id="thumbnail-main">
+            </div>
+            <div>
+                <!-- Video title -->
+                <h3 class="text-xl font-bold text-gray-900 mb-1">{{ info.get("title") }}</h3>
+                <!-- Duration -->
+                <p class="text-gray-600">Duration: {{ info.get("duration") }}</p>
+            </div>
+        </div>
+        <hr class="my-4">
+        <h4 class="text-lg font-semibold text-gray-800 mb-3">Download Options</h4>
+        <div class="space-y-2" id="dlBtnBox">
+            <!-- Download Buttons -->
+            <div class="flex items-center justify-between">
+                <div class="flex gap-2 items-center">
+                    <i class="fas fa-image text-xl text-blue-500"></i>
+                    <span class="text-gray-700">Thumbnail Image</span>
+                </div>
+                <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300" href={{imgSrc}} target="_blank">
+                    Download
+                </a>
+            </div>
+            <div id="loaderBox" class="flex flex-col items-center justify-center">
+                <lottie-player id="loader" src="https://lottie.host/357e594f-09d0-48cc-ae41-1c04b33a3b8e/CSB0vKrRqv.json" background="#00000000" speed="1" style="width: 100px;" loop autoplay direction="1" mode="normal"></lottie-player>
+                <p class="myText" id="loadingStatus">Loading download options..</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock main %}
+
+{% block js %}
+
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<script>
+    let btnBox = document.getElementById("dlBtnBox");
+    let link = "{{link}}";
+    let loaderBox = document.getElementById("loaderBox");
+    let loader = document.getElementById("loader");
+    let loadingStatus = document.getElementById("loadingStatus");
+
+    function createButton(data){
+        let button = document.createElement("div");
+        button.setAttribute("class", "flex items-center justify-between");
+        button.innerHTML = `
+            <div class="flex gap-2 items-center">
+                <i class="fas fa-video text-xl text-red-500"></i>
+                <span class="text-gray-700">${data['res']} ${data['filesize']} MB</span>
+            </div>
+            <a target="_blank" href="${data["dl_link"]}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-300 cursor-pointer">
+                Download
+            </a>
+        `
+        btnBox.appendChild(button);
+    }
+
+    fetch(`/streams?link=${link}`,
+    { 
+        method: "GET",
+        headers: { Accept : "application/json" }
+    }
+    ).then((response)=>{ 
+    return response.json().then((jsonResponse)=>{
+        if (jsonResponse.error) {
+            loader.style.display = "none";
+            loadingStatus.innerText = jsonResponse.msg;
+            loadingStatus.style.color = "red";
+        } else {
+            loaderBox.style.display = "none";
+            let list = jsonResponse["list"]
+            list.forEach(item => {
+                createButton(item);
+            });
+        }
+    })
+})
+</script>
+
+{% endblock js %}

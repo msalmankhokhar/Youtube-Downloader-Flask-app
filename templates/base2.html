@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:image" content="{% block prevImg %}/static/css/favicon.ico{% endblock prevImg %}" />
+    <title>{% block title %}V Downloader | Youtube video downloader{% endblock title %}</title>
+    <meta name="description" content="{% block desc %}Download youtube videos and thumbnails{% endblock desc %}"">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/fonts.css">
+    {% block css %}{% endblock css %}
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-white shadow">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <!-- <i class="fas fa-cloud-download-alt text-xl text-gray-800"></i> -->
+                        <img src="/static/favicon.ico" class="max-w-8" alt="" srcset="">
+                        <a href="/" class="decoration-none">
+                            <h1 class="ml-3 text-lg font-semibold text-gray-800" id="nav_title">V Downloader</h1>
+                        </a>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="hidden md:flex items-center space-x-1">
+                        <a href="/" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100">Home</a>
+                        <!-- <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100">About</a> -->
+                    </div>
+                    <div class="flex items-center">
+                        <button id="theme-toggle" class="text-gray-600 hover:text-gray-900 focus:outline-none focus:text-gray-900 transition duration-500 ease-in-out">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                    <div class="flex items-center md:hidden">
+                        <button id="mobile-menu-button" class="mobile-menu-button">
+                            <i class="fas fa-bars fa-2x text-gray-800"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="md:hidden">
+            <div id="mobile-menu" class="px-2 pt-2 pb-3 space-y-1 sm:px-3 hidden">
+                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100">Home</a>
+                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="mt-10">
+        {% block main %}{% endblock main %}
+    </main>
+
+    <footer class="bg-white shadow mt-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="py-8 flex justify-center items-center">
+                <p class="text-gray-600 text-sm text-center">© 2023 V Downloader. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+<script src="/static/js/theme.js"></script>
+<script src="/static//js//menu.js"></script>
+{% block js %}{% endblock js %}
+</html>

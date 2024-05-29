@@ -23,7 +23,7 @@ def video():
             video = YouTube(link)
             thumbNail_src = video.thumbnail_url
             info = { "title" : video.title, "duration" : seconds_to_duration(video.length), "thumbnailSrc": thumbNail_src, "embed_url": video.embed_url }
-            return render_template('dl.html', imgSrc = thumbNail_src, info = info, link = link)
+            return render_template('dl2.html', imgSrc = thumbNail_src, info = info, link = link)
         except VideoUnavailable as e:
             flash(f"Sorry this video is unavailable<br>Error: {str(e)}", "error")
             return redirect("/")
