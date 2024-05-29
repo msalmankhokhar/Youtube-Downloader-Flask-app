@@ -1,17 +1,27 @@
-from flask import Flask, render_template, request, flash, redirect, send_file, Response, stream_with_context
+from flask import Flask, render_template, request, flash, redirect, send_file, Response, stream_with_context, g
 import requests
 from util import get_thumbnail_url, is_valid_youtube_url, seconds_to_duration
 from pytube import YouTube, Stream
 from pytube.exceptions import VideoUnavailable, RegexMatchError
 from waitress import serve
+from urllib.parse import urljoin
 
 app = Flask(__name__)
 app.secret_key = "salmank138"
+THEME_COLOR = "red"
+THEME_COLOR2 = "orange"
+
+@app.before_request
+def add_theme_color():
+    g.themecolor = THEME_COLOR
+    g.themecolor2 = THEME_COLOR2
 
 @app.route('/')
 def index():
     link = request.args.get("link")
-    return render_template('index.html', link =  link)
+    prevImg = urljoin(request.host_url, '/static/logos/apple-touch-icon.png')
+    print(prevImg)
+    return render_template('index.html', link =  link, prevImg =  prevImg)
 
 @app.route('/video')
 def video():

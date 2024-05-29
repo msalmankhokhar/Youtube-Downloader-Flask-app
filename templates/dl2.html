@@ -4,8 +4,6 @@
 
 {% block title %}{{ info.get("title") }} | V Downloader{% endblock title %}
 
-{% block desc %}{% endblock desc %}
-
 {% block css %}
 <style>
 #loader{
@@ -40,7 +38,7 @@
 
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="bg-white p-8 shadow rounded-lg">
-        <div class="flex items-center space-x-6 mb-4">
+        <div class="flex items-center gap-4 mb-4 flex-wrap">
             <div id="thumbnailBox">
                 <!-- Thumbnail Image or Iframe here-->
                 <!-- <img class="w-32 h-32 rounded" src="{{imgSrc}}" alt="Video thumbnail placeholder"> -->
@@ -59,10 +57,10 @@
             <!-- Download Buttons -->
             <div class="flex items-center justify-between">
                 <div class="flex gap-2 items-center">
-                    <i class="fas fa-image text-xl text-blue-500"></i>
+                    <i class="fas fa-image text-xl text-{{g.themecolor2}}-500"></i>
                     <span class="text-gray-700">Thumbnail Image</span>
                 </div>
-                <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300" href={{imgSrc}} target="_blank">
+                <a class="bg-{{g.themecolor2}}-500 hover:bg-{{g.themecolor2}}-700 text-white font-bold py-2 px-4 rounded transition duration-300" href={{imgSrc}} target="_blank">
                     Download
                 </a>
             </div>
@@ -94,7 +92,7 @@
                 <i class="fas fa-video text-xl text-red-500"></i>
                 <span class="text-gray-700">${data['res']} ${data['filesize']} MB</span>
             </div>
-            <a target="_blank" href="${data["dl_link"]}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-300 cursor-pointer">
+            <a target="_blank" href="${data["dl_link"]}" class="bg-{{g.themecolor}}-500 hover:bg-{{g.themecolor}}-700 text-white font-bold py-2 px-4 rounded transition duration-300 cursor-pointer">
                 Download
             </a>
         `

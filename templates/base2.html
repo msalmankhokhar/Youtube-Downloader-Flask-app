@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:image" content="{% block prevImg %}/static/css/favicon.ico{% endblock prevImg %}" />
+    <meta property="og:image" content="{% block prevImg %}{{prevImg}}{% endblock prevImg %}" />
     <title>{% block title %}V Downloader | Youtube video downloader{% endblock title %}</title>
     <meta name="description" content="{% block desc %}Download youtube videos and thumbnails{% endblock desc %}"">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/css/fonts.css">
+    <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon">
     {% block css %}{% endblock css %}
 </head>
 <body class="bg-gray-100">
@@ -46,8 +47,8 @@
         </div>
         <div class="md:hidden">
             <div id="mobile-menu" class="px-2 pt-2 pb-3 space-y-1 sm:px-3 hidden">
-                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100">Home</a>
-                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100">About</a>
+                <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100">Home</a>
+                <!-- <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100">About</a> -->
             </div>
         </div>
     </nav>
@@ -65,6 +66,6 @@
     </footer>
 </body>
 <script src="/static/js/theme.js"></script>
-<script src="/static//js//menu.js"></script>
+<script src="/static/js/menu.js"></script>
 {% block js %}{% endblock js %}
 </html>
