@@ -27,6 +27,13 @@ body {
     background-color: #63b3ed;
 }
 
+#theme-toggle-icon.fa-sun{
+    color: #fde047;
+}
+#theme-toggle-icon.fa-moon{
+    /* color:#64748b; */
+}
+
 footer{
     /* height: 100%; */
 }
