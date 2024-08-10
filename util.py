@@ -1,5 +1,5 @@
 from urllib.parse import urlparse, parse_qs
-from pytube import YouTube, Stream
+from pytubefix import YouTube, Stream
 import re
 
 sample_link = "https://www.youtube.com/watch?v=w330WRDgpKs"

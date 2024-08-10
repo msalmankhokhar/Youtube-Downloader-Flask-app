@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, flash, redirect, send_file, Response, stream_with_context, g, session
 import requests
 from util import get_thumbnail_url, is_valid_youtube_url, seconds_to_duration
-from pytube import YouTube, Stream
-from pytube.exceptions import VideoUnavailable, RegexMatchError
+from pytubefix import YouTube, Stream, StreamQuery
+from pytubefix.exceptions import VideoUnavailable, RegexMatchError
 from waitress import serve
 from urllib.parse import urljoin
 from svg import svg
@@ -10,7 +10,7 @@ from svg import svg
 app = Flask(__name__)
 app.secret_key = "salmank138"
 THEME_COLOR = "red"
-THEME_COLOR2 = "orange"
+THEME_COLOR2 = "blue"
 
 @app.before_request
 def add_theme_color():
@@ -40,7 +40,6 @@ def index():
 def video():
     link = request.args.get("link")
     isValidLink = is_valid_youtube_url(str(link))
-    print(f"<{link}> is {isValidLink}") # debug print statement
     if isValidLink == True:
         try:
             video = YouTube(link)
@@ -66,19 +65,18 @@ def get_streams():
     if request.method == "GET":
         try:
             video = YouTube(link)
-            streamQuery = video.streams.filter(file_extension='mp4', only_audio=False, type="video", progressive=False)
-            streams = [ { "res" : stream.resolution, "dl_link" : stream.url, "filesize" : round(stream.filesize_mb), "includes_audio" : stream.includes_audio_track } for stream in streamQuery ]
+            streamQuery : list[Stream] = video.streams.filter(file_extension='mp4', type="video", progressive=False).order_by('resolution')
+            streams = [ { "res" : stream.resolution, "dl_link" : stream.url, "filesize" : round(stream.filesize_mb), "includes_audio" : stream.includes_audio_track, "audio_codec" : stream.audio_codec } for stream in streamQuery ]
             return { "list" : streams }
         except VideoUnavailable as e:
-            return { "error" : True , "msg" : "Sorry, this Video is unavailable"}
-        except Exception as e:
-            return { "error" : True , "msg" : str(e)}
+            return { "error" : True , "msg" : "Sorry, this Video is unavailable" }
+        
 
 @app.route('/about', methods=['GET'])
 def about():
     return render_template('about.html')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80, debug=True)
+    app.run(host='0.0.0.0', port=81, debug=True)
     # serve(app, host='0.0.0.0', port=80)
  
